@@ -1,0 +1,26 @@
+name: read-java-property
+author: madhead <siarhei.krukau@gmail.com>
+description: GitHub Action to read values from Java's .properties files
+inputs:
+  file:
+    description: A file to read
+    required: true
+  property:
+    description: A property to read from the file
+    required: true
+  default:
+    description: A value to return in case of any errors
+    required: false
+outputs:
+  value:
+    description: Property's value
+runs:
+  using: docker
+  image: 'ghcr.io/madhead/read-java-property:v2'
+  args:
+    - ${{ inputs.file }}
+    - ${{ inputs.property }}
+    - ${{ inputs.default }}
+branding:
+  icon: list
+  color: gray-dark

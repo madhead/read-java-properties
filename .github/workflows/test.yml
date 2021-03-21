@@ -1,0 +1,32 @@
+name: Test
+on:
+  - push
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./
+        id: success
+        with:
+          file: src/test/resources/test.properties
+          property: name
+
+      - uses: ./
+        id: default
+        with:
+          file: src/test/resources/unexisting.properties
+          property: name
+          default: Anakin Skywalker
+
+      - uses: ./
+        id: fail
+        with:
+          file: src/test/resources/unexisting.properties
+          property: name
+#        continue-on-error: true
+
+      - run: '[[ "Darth Vader" == "${{ steps.success.outputs.value }}" ]]'
+      - run: '[[ "Anakin Skywalker" == "${{ steps.default.outputs.value }}" ]]'
