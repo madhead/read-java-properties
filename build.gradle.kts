@@ -29,4 +29,10 @@ tasks {
             useIR = true
         }
     }
+
+    register("javaVersion") {
+        doLast {
+            println("::set-output name=java-version::${Versions.JVM}")
+        }
+    }
 }

@@ -16,7 +16,7 @@ outputs:
     description: Property's value
 runs:
   using: docker
-  image: 'ghcr.io/madhead/read-java-property:latest'
+  image: '../../../Dockerfile'
   args:
     - ${{ inputs.file }}
     - ${{ inputs.property }}
