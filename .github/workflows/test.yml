@@ -8,25 +8,26 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ./
+      - uses: ./src/test/resources/
         id: success
         with:
           file: src/test/resources/test.properties
           property: name
 
-      - uses: ./
+      - uses: ./src/test/resources/
         id: default
         with:
           file: src/test/resources/unexisting.properties
           property: name
           default: Anakin Skywalker
 
-      - uses: ./
+      - uses: ./src/test/resources/
         id: fail
         with:
           file: src/test/resources/unexisting.properties
           property: name
-#        continue-on-error: true
+        continue-on-error: true
 
       - run: '[[ "Darth Vader" == "${{ steps.success.outputs.value }}" ]]'
       - run: '[[ "Anakin Skywalker" == "${{ steps.default.outputs.value }}" ]]'
+      - run: '[[ "failure" == "${{ steps.fail.outcome }}" ]]'

@@ -1,7 +1,10 @@
 ARG JAVA=11
 
-FROM openjdk:${JAVA}
-ADD build/distributions/read-java-property.tar /opt
-ENTRYPOINT ["/opt/read-java-property/bin/read-java-property"]
+FROM openjdk:${JAVA} AS builder
+WORKDIR /read-java-property
+COPY . ./
+RUN ./gradlew clean install
 
-LABEL org.opencontainers.image.source='https://github.com/madhead/read-java-property'
+FROM openjdk:${JAVA}
+COPY --from=0 /read-java-property/build/install /opt/
+ENTRYPOINT ["/opt/read-java-property/bin/read-java-property"]
