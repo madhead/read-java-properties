@@ -4,6 +4,8 @@ GitHub Action to read values from Java's `.properties` files.
 
 ## Usage
 
+Returning a single property is as simple as:
+
 ```yaml
 - uses: madhead/read-java-properties@latest
   id: version
@@ -13,6 +15,20 @@ GitHub Action to read values from Java's `.properties` files.
     default: 0.0.1
 
 - run: echo ${{ steps.version.outputs.value }} # Project's version from gradle.properties or 0.0.1 if it is not defined there
+```
+
+Alternatively, you could return all the values from the `.properties` file by employing the `all` flag:
+
+```yaml
+- uses: madhead/read-java-properties@latest
+  id: all
+  with:
+    file: gradle.properties
+    all: true
+
+- run: echo ${{ steps.all.outputs.version }} # Project's version from gradle.properties
+- run: echo ${{ steps.all.outputs.groupId }} # Project's groupID from gradle.properties
+  …
 ```
 
 To see the list of available versions of this action (`latest` in the example above), navigate to the [Releases & Tags](https://github.com/madhead/read-java-properties/tags) page of this repo.

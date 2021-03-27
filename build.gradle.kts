@@ -13,7 +13,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("me.madhead.github.actions.rjp.ReadJavaPropertyKt")
+    mainClass.set("me.madhead.github.actions.rjp.ReadJavaPropertiesKt")
 }
 
 java {

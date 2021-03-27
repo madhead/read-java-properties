@@ -22,10 +22,27 @@ jobs:
       - uses: ./src/test/resources/
         id: default
         with:
+          file: src/test/resources/test.properties
+          property: version
+          default: 1.0.0
+      - run: '[[ "1.0.0" == "${{ steps.default.outputs.value }}" ]]'
+
+      - uses: ./src/test/resources/
+        id: unexisting-file
+        with:
           file: src/test/resources/unexisting.properties
           property: name
           default: Anakin Skywalker
-      - run: '[[ "Anakin Skywalker" == "${{ steps.default.outputs.value }}" ]]'
+      - run: '[[ "Anakin Skywalker" == "${{ steps.unexisting-file.outputs.value }}" ]]'
+
+      - uses: ./src/test/resources/
+        id: all
+        with:
+          file: src/test/resources/test.properties
+          all: true
+      - run: '[[ "Darth Vader" == "${{ steps.all.outputs.name }}" ]]'
+      - run: '[[ "Sith Lord" == "${{ steps.all.outputs.occupation }}" ]]'
+      - run: '[[ "Luke Skywalker" == "${{ steps.all.outputs.son }}" ]]'
 
       - uses: ./src/test/resources/
         id: failure
