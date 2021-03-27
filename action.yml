@@ -20,7 +20,7 @@ outputs:
     description: Property's value
 runs:
   using: docker
-  image: 'docker://ghcr.io/madhead/read-java-properties:latest'
+  image: 'docker://ghcr.io/madhead/read-java-properties:1.1.0'
   args:
     - ${{ inputs.file }}
     - ${{ inputs.property }}
