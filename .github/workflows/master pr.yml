@@ -12,7 +12,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.base.sha }}
 
-      - uses: madhead/read-java-property@master
+      - uses: madhead/read-java-properties@master
         id: base-version
         with:
           file: gradle.properties
@@ -21,7 +21,7 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - uses: madhead/read-java-property@master
+      - uses: madhead/read-java-properties@master
         id: new-version
         with:
           file: gradle.properties

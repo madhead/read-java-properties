@@ -1,4 +1,4 @@
-name: read-java-property
+name: read-java-properties
 author: madhead <siarhei.krukau@gmail.com>
 description: GitHub Action to read values from Java's .properties files
 inputs:
