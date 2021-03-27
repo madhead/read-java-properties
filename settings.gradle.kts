@@ -1,1 +1,1 @@
-rootProject.name = "read-java-property"
+rootProject.name = "read-java-properties"

@@ -1,4 +1,4 @@
-name: read-java-property
+name: read-java-properties
 author: madhead <siarhei.krukau@gmail.com>
 description: GitHub Action to read values from Java's .properties files
 inputs:
@@ -16,7 +16,7 @@ outputs:
     description: Property's value
 runs:
   using: docker
-  image: 'docker://ghcr.io/madhead/read-java-property:latest'
+  image: 'docker://ghcr.io/madhead/read-java-properties:latest'
   args:
     - ${{ inputs.file }}
     - ${{ inputs.property }}

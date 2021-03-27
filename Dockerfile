@@ -1,10 +1,10 @@
 ARG JAVA=11
 
 FROM openjdk:${JAVA} AS builder
-WORKDIR /read-java-property
+WORKDIR /read-java-properties
 COPY . ./
 RUN ./gradlew clean install
 
 FROM openjdk:${JAVA}
-COPY --from=0 /read-java-property/build/install /opt/
-ENTRYPOINT ["/opt/read-java-property/bin/read-java-property"]
+COPY --from=0 /read-java-properties/build/install /opt/
+ENTRYPOINT ["/opt/read-java-properties/bin/read-java-properties"]

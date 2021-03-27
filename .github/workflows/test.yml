@@ -1,6 +1,7 @@
 name: Test
 on:
   - push
+
 jobs:
   test:
     name: Test
@@ -13,6 +14,7 @@ jobs:
         with:
           file: src/test/resources/test.properties
           property: name
+      - run: '[[ "Darth Vader" == "${{ steps.success.outputs.value }}" ]]'
 
       - uses: ./src/test/resources/
         id: default
@@ -20,14 +22,12 @@ jobs:
           file: src/test/resources/unexisting.properties
           property: name
           default: Anakin Skywalker
+      - run: '[[ "Anakin Skywalker" == "${{ steps.default.outputs.value }}" ]]'
 
       - uses: ./src/test/resources/
-        id: fail
+        id: failure
         with:
           file: src/test/resources/unexisting.properties
           property: name
         continue-on-error: true
-
-      - run: '[[ "Darth Vader" == "${{ steps.success.outputs.value }}" ]]'
-      - run: '[[ "Anakin Skywalker" == "${{ steps.default.outputs.value }}" ]]'
-      - run: '[[ "failure" == "${{ steps.fail.outcome }}" ]]'
+      - run: '[[ "failure" == "${{ steps.failure.outcome }}" ]]'
