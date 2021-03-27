@@ -7,7 +7,11 @@ inputs:
     required: true
   property:
     description: A property to read from the file
-    required: true
+    required: false
+  all:
+    description: A flag to read and output all the properties from the file
+    required: false
+    default: 'false'
   default:
     description: A value to return in case of any errors
     required: false
@@ -20,6 +24,7 @@ runs:
   args:
     - ${{ inputs.file }}
     - ${{ inputs.property }}
+    - ${{ inputs.all }}
     - ${{ inputs.default }}
 branding:
   icon: list
