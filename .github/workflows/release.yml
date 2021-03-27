@@ -67,9 +67,7 @@ jobs:
       - run: git tag --force ${{ steps.version.outputs.major }}
 
       - run: git checkout -b release/latest ${{ github.sha }}
-      - run: sed -i 's/docker:\/\/ghcr\.io\/madhead\/read-java-properties:latest/docker:\/\/ghcr.io\/madhead\/read-java-properties:latest/' action.yml
-      - run: git add action.yml
-      - run: git commit --message 'latest'
+      - run: git commit --message 'latest' --allow-empty
       - run: git tag --force latest
 
       - run: >
