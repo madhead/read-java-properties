@@ -45,25 +45,28 @@ jobs:
           build-args: |
             JAVA=${{ steps.java-version.outputs.java-version }}
 
-      - run: git checkout -b release/${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}
+      - run: git config user.name "madhead"
+      - run: git config user.email "siarhei.krukau@gmail.com"
+
+      - run: git checkout -b release/${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }} ${{ github.sha }}
       - run: sed -i 's/docker:\/\/ghcr\.io\/madhead\/read-java-properties:latest/docker:\/\/ghcr.io\/madhead\/read-java-properties:${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}/' action.yml
       - run: git add action.yml
       - run: git commit --message '${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}'
       - run: git tag --force ${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}
 
-      - run: git checkout -b release/${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}
+      - run: git checkout -b release/${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }} ${{ github.sha }}
       - run: sed -i 's/docker:\/\/ghcr\.io\/madhead\/read-java-properties:latest/docker:\/\/ghcr.io\/madhead\/read-java-properties:${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}/' action.yml
       - run: git add action.yml
       - run: git commit --message '${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}'
       - run: git tag --force ${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}
 
-      - run: git checkout -b release/${{ steps.version.outputs.major }}
+      - run: git checkout -b release/${{ steps.version.outputs.major }} ${{ github.sha }}
       - run: sed -i 's/docker:\/\/ghcr\.io\/madhead\/read-java-properties:latest/docker:\/\/ghcr.io\/madhead\/read-java-properties:${{ steps.version.outputs.major }}/' action.yml
       - run: git add action.yml
       - run: git commit --message '${{ steps.version.outputs.major }}'
       - run: git tag --force ${{ steps.version.outputs.major }}
 
-      - run: git checkout -b release/latest
+      - run: git checkout -b release/latest ${{ github.sha }}
       - run: sed -i 's/docker:\/\/ghcr\.io\/madhead\/read-java-properties:latest/docker:\/\/ghcr.io\/madhead\/read-java-properties:latest/' action.yml
       - run: git add action.yml
       - run: git commit --message 'latest'
