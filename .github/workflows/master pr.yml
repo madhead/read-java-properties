@@ -1,8 +1,10 @@
 name: PR to master
+
 on:
   pull_request:
     branches:
       - master
+
 jobs:
   test:
     name: PR to master
