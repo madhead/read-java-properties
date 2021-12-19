@@ -38,3 +38,11 @@ Whenever a new version is released, corresponding tags are created / updated.
 There are also `$major` and `$major.$minor` tags pointing to the latest matching version (i.e. tag `1` always points to the latest `1.x` version, and tag `1.1` — to the latest `1.1.x` version).
 
 To see this action… in action… check its integration test in [`test.yml`](.github/workflows/test.yml).
+
+### ERROR: `JAVA_HOME` is set to an invalid directory
+
+Note, that due to the environment variables "leaking" from the workflow into the Docker container actions, if you workflow defines a `JAVA_HOME` variable, this action would fail.
+
+Try not to set `JAVA_HOME` before running this action until this "leakage" is "fixed" by the GitHub Actions team.
+
+Read more about this issue in [#28](https://github.com/madhead/read-java-properties/issues/28) and check the [minimal reproducible example](https://github.com/madhead/actions-env-leak).
