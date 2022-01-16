@@ -12,9 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: gradle/wrapper-validation-action@v1
+
       # Default Java from the container is used.
-      - run: ./gradlew javaVersion
+      - uses: gradle/gradle-build-action@v2
         id: java-version
+        with:
+          arguments: javaVersion
 
       - uses: madhead/read-java-properties@latest
         id: project-version
