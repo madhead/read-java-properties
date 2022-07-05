@@ -1,0 +1,12 @@
+inputs:
+  file:
+    type: string
+  property:
+    type: string
+  all:
+    type: boolean
+  default:
+    type: string
+outputs:
+  value:
+    type: string
