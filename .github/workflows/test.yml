@@ -51,3 +51,9 @@ jobs:
           property: name
         continue-on-error: true
       - run: '[[ "failure" == "${{ steps.failure.outcome }}" ]]'
+  actions-typing:
+    name: Validate actions typing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: krzema12/github-actions-typing@v0
