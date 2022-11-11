@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm").version(Versions.Plugins.KOTLIN)
+    alias(libs.plugins.kotlin)
     application
 }
 
@@ -18,21 +18,20 @@ application {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(Versions.JVM))
+        languageVersion.set(libs.versions.jvm.map(JavaLanguageVersion::of))
     }
 }
 
 tasks {
     withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "${Versions.JVM}"
-            useIR = true
+            jvmTarget = libs.versions.jvm.get()
         }
     }
 
     register("javaVersion") {
         doLast {
-            println("::set-output name=java-version::${Versions.JVM}")
+            println("::set-output name=java-version::${libs.versions.jvm.get()}")
         }
     }
 }
