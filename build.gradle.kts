@@ -1,3 +1,5 @@
+import java.lang.System.getenv
+import java.lang.System.lineSeparator
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -31,7 +33,7 @@ tasks {
 
     register("javaVersion") {
         doLast {
-            println("::set-output name=java-version::${libs.versions.jvm.get()}")
+            File(getenv("GITHUB_OUTPUT")).appendText("java-version=${libs.versions.jvm.get()}${lineSeparator()}")
         }
     }
 }
