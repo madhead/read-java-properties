@@ -1,11 +1,11 @@
-ARG JAVA=11
+ARG JAVA=17
 
-FROM openjdk:${JAVA} AS builder
+FROM eclipse-temurin:${JAVA} AS builder
 WORKDIR /read-java-properties
 COPY . ./
 RUN ./gradlew clean install
 
-FROM openjdk:${JAVA}
+FROM eclipse-temurin:${JAVA}
 COPY --from=0 /read-java-properties/build/install /opt/
 ENTRYPOINT ["/opt/read-java-properties/bin/read-java-properties"]
 
