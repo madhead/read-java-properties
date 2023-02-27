@@ -20,7 +20,7 @@ jobs:
         with:
           arguments: javaVersion
 
-      - uses: madhead/read-java-properties@latest
+      - uses: madhead/read-java-properties@master
         id: project-version
         with:
           file: gradle.properties
