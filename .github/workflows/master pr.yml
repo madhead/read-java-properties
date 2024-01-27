@@ -10,7 +10,7 @@ jobs:
     name: PR to master
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.sha }}
 
@@ -21,7 +21,7 @@ jobs:
           property: version
           default: 0.0.0
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: madhead/read-java-properties@master
         id: new-version
