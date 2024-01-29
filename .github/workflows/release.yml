@@ -15,7 +15,7 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
 
       # Default Java from the container is used.
-      - uses: gradle/gradle-build-action@v2
+      - uses: gradle/gradle-build-action@v3
         id: java-version
         with:
           arguments: javaVersion
