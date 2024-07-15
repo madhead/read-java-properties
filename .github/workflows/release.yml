@@ -12,13 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: gradle/wrapper-validation-action@v1
+      - uses: gradle/actions/wrapper-validation@v3
 
       # Default Java from the container is used.
-      - uses: gradle/gradle-build-action@v2
-        id: java-version
-        with:
-          arguments: javaVersion
+      - uses: gradle/actions/setup-gradle@v3
+
+      - id: java-version
+        run: ./gradlew javaVersion
 
       - uses: madhead/read-java-properties@latest
         id: project-version
@@ -31,7 +31,7 @@ jobs:
         with:
           version: ${{ steps.project-version.outputs.value }}
 
-      - uses: docker/login-action@v2
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
