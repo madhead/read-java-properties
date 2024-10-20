@@ -1,0 +1,22 @@
+name: compare
+description: Compare two strings
+inputs:
+  a:
+    required: true
+    description: A
+  b:
+    required: true
+    description: B
+runs:
+  using: composite
+  steps:
+    - run: 'echo $a > /tmp/a'
+      shell: bash
+      env:
+        a: ${{ toJSON(inputs.a) }}
+    - run: 'echo $b > /tmp/b'
+      shell: bash
+      env:
+        b: ${{ toJSON(inputs.b) }}
+    - run: diff /tmp/a /tmp/b
+      shell: bash

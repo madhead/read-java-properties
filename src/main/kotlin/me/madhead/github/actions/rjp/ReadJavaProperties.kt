@@ -2,10 +2,12 @@ package me.madhead.github.actions.rjp
 
 import java.io.FileInputStream
 import java.lang.System.getenv
-import java.lang.System.lineSeparator
 import java.util.Properties
 import kotlin.io.path.Path
 import kotlin.io.path.appendText
+import kotlin.io.path.useLines
+
+private val newLine = System.lineSeparator()
 
 fun main(args: Array<String>) {
     val file = args[0]
@@ -21,14 +23,19 @@ fun main(args: Array<String>) {
             properties.load(fis)
 
             if ("true".equals(all, ignoreCase = true)) {
-                properties.entries.forEach { (key, value) ->
-                    githubOutput.appendText("$key=$value${lineSeparator()}")
+                properties.every { key, value ->
+                    githubOutput.appendText(packKeyValue(key, value))
                 }
             } else {
                 properties.getProperty(property)?.let { value ->
-                    githubOutput.appendText("value=$value${lineSeparator()}")
+                    githubOutput.appendText(packKeyValue("value", value))
                 } ?: run {
-                    githubOutput.appendText("value=${default.takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("$property (No such property)")}${lineSeparator()}")
+                    githubOutput.appendText(
+                        packKeyValue(
+                            "value",
+                            default.takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("$property (No such property)")
+                        )
+                    )
                 }
             }
         }
@@ -38,8 +45,25 @@ fun main(args: Array<String>) {
         if ("true".equals(all, ignoreCase = true)) {
             throw e
         } else {
-            githubOutput.appendText("value=${default.takeIf { it.isNotEmpty() } ?: throw e}${lineSeparator()}")
+            githubOutput.appendText(packKeyValue("value", default.takeIf { it.isNotEmpty() } ?: throw e))
         }
     }
-
 }
+
+private fun Properties.every(action: (String, String) -> Unit) {
+    for (element in this) action(element.key.toString(), element.value.toString())
+}
+
+private fun packKeyValue(key: String, value: String): String {
+    if (value.isMultiline()) {
+        var delimiter = "read-java-properties-delimiter"
+        while (value.contains(delimiter)) {
+            delimiter += "-x"
+        }
+        return "$key<<$delimiter$newLine$value$newLine$delimiter$newLine"
+    } else {
+        return "$key=$value$newLine"
+    }
+}
+
+private fun String.isMultiline(): Boolean = this.split(Regex("^(.*)$", RegexOption.MULTILINE)).isNotEmpty()
