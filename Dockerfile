@@ -1,4 +1,4 @@
-ARG JAVA=21
+ARG JAVA=25
 
 FROM eclipse-temurin:${JAVA} AS builder
 WORKDIR /read-java-properties
