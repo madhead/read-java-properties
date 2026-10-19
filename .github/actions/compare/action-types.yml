@@ -1,0 +1,5 @@
+inputs:
+  a:
+    type: string
+  b:
+    type: string
